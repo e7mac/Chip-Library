@@ -1,0 +1,6 @@
+All binary data is sent and received as unsigned short to maximize accuracy at the bit depth.
+
+Naming Principles
+1. All variables should be defined as instance vars so that they can be measured for debugging
+2. Start ivars with m. Don't add m to output and inputs.
+3. The unsigned int should be named as the variable and a float suffix should be added for the float version
