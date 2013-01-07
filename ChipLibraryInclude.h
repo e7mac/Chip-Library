@@ -19,6 +19,7 @@
 #include "ADSREnvelopeChip.h"
 #include "MultiplierChip.h"
 #include "ResetTimerChip.h"
+#include "DelayChip.h"
 
 #include "Gate.h"
 #include "BinaryGate.h"

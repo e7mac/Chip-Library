@@ -28,6 +28,8 @@ protected:
 public:
     void addChip(Chip *withChip);
     void removeChip(Chip *removeChip);
+    Chip *getChipAtIndex(int i);
+    int getNumberOfChips();
     
     void addConnection(ChipOutput *chipOutput, ChipInput *chipInput);
     void removeConnection(ChipInput *chipInput);

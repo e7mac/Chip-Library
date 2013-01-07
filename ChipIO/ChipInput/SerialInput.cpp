@@ -13,5 +13,4 @@ void SerialInput::refreshInput()
     // TEST BLOCK
     if (connection)
         inputRegister.pushBit(connection->serialOutput());
-//    inputRegister.pushBit(connection->serialOutput());
 }

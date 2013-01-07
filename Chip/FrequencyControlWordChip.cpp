@@ -60,6 +60,7 @@ void FrequencyControlWordChip::reset()
         mDeviationFloat =  (float)mDeviation / ((1<<nbits)-1);
         mDeviationFloat = mDeviationFloat*2-1;
     }
+
     mDeltaFrequency = mCenterFrequency * mBeta;
     mDeviationAmountFloat = mDeviationFloat*mDeltaFrequency;
     mFrequency = mCenterFrequency + mDeviationAmountFloat;

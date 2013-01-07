@@ -54,3 +54,12 @@ void CircuitBoard::tick()
         mChips[i]->tick();
     }
 }
+
+Chip* CircuitBoard::getChipAtIndex(int i)
+{
+    return mChips[i];
+}
+int CircuitBoard::getNumberOfChips()
+{
+    return mChips.size();
+}

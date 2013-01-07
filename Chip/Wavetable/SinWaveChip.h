@@ -17,7 +17,7 @@ class SinWaveChip:public WavetableChip
 public:
     SinWaveChip();
     float waveFunction(short i);
-    virtual std::string description() {return "sin wave";};
+//    virtual std::string description() {return "sin wave";};
 
 };
 

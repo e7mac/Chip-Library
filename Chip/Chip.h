@@ -21,7 +21,7 @@ public:
     static short nbits;
     static int srate;
     virtual void tick() {};
-    virtual std::string description() {return "";};
+    virtual std::string description() = 0;
 };
 
 #endif /* defined(__CircuitModel__Chip__) */
