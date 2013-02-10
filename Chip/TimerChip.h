@@ -20,7 +20,8 @@ protected:
 public:
     TimerChip();
     SingleBitOutput output;
-    void tick();
+    void tickInput();
+    void tickOutput();
 
     virtual std::string description() {return "timer";};    
 };

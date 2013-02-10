@@ -27,11 +27,14 @@ public:
     WavetableChip();
     SerialInput input;
     SerialOutput output;
-    EdgeTriggeredInput clockInput;
-    EdgeTriggeredInput resetInput;
-    void tick();
-    void clock();
-    void reset();
+    EdgeTriggeredInput clockInputRegister;
+    EdgeTriggeredInput resetInputRegister;
+    void tickInput();
+    void tickOutput();
+    void clockInput();
+    void clockOutput();
+    void resetInput();
+    void resetOutput();
     void cache();
 
     float getWavetableOutFloat(){return mWavetableOutFloat;};

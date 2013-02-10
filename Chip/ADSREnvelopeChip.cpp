@@ -14,8 +14,8 @@ ADSREnvelopeChip::ADSREnvelopeChip()
     mEnvelopeValueFloat=0;
     mStage = -1;
     noteOnInput.setChip(this);
-    clockInput.setChip(this);
-    resetInput.setChip(this);
+    clockInputRegister.setChip(this);
+    resetInputRegister.setChip(this);
     output.setChip(this);
 }
 void ADSREnvelopeChip::setAttackTime(float withTime)
@@ -57,31 +57,48 @@ void ADSREnvelopeChip::release()
     mStage = 4;
 }
 
-void ADSREnvelopeChip::tick()
+void ADSREnvelopeChip::tickInput()
 {
-    clockInput.refreshInput();
-    if (clockInput.getRisingEdge())
-        clock();
-    resetInput.refreshInput();
+    clockInputRegister.refreshInput();
+    if (clockInputRegister.getRisingEdge())
+        clockInput();
+    resetInputRegister.refreshInput();
     
     if (noteOnInput.isConnected())
         noteOnInput.refreshInput();     // if not connected, then no error.. allows us to trigger independtly
     
-    if (resetInput.getRisingEdge())
-        reset();
+    if (resetInputRegister.getRisingEdge())
+        resetInput();
 }
 
-void ADSREnvelopeChip::clock()
+void ADSREnvelopeChip::tickOutput()
+{
+    if (clockInputRegister.getRisingEdge())
+        clockOutput();
+    
+    if (resetInputRegister.getRisingEdge())
+        resetOutput();
+}
+
+void ADSREnvelopeChip::clockInput()
+{
+}
+
+void ADSREnvelopeChip::clockOutput()
 {
     output.outputRegister.leftCircularShift(1);
 }
 
-void ADSREnvelopeChip::reset()
+void ADSREnvelopeChip::resetInput()
 {
     update();
     if (noteOnInput.isConnected())
         mNoteOn = noteOnInput.getInputBit();
     mEnvelopeValue = (mEnvelopeValueFloat * 0.5 + 0.5) * ((1<<nbits)-1);
+}
+
+void ADSREnvelopeChip::resetOutput()
+{
     output.outputRegister.setValue(mEnvelopeValue);    // move from 0-1 to 0.5 - 1 to deal with the multiplier later
 }
 

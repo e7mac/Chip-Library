@@ -20,7 +20,8 @@ protected:
 public:
     static short nbits;
     static int srate;
-    virtual void tick() {};
+    virtual void tickInput() {};
+    virtual void tickOutput() {};
     virtual std::string description() = 0;
 };
 

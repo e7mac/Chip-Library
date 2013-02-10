@@ -25,12 +25,15 @@ public:
     MultiplierChip();
     SerialInput input[2];
     SerialOutput output;
-    EdgeTriggeredInput clockInput;
-    EdgeTriggeredInput resetInput;
+    EdgeTriggeredInput clockInputRegister;
+    EdgeTriggeredInput resetInputRegister;
     
-    void tick();
-    void clock();
-    void reset();
+    void tickInput();
+    void tickOutput();
+    void clockInput();
+    void clockOutput();
+    void resetInput();
+    void resetOutput();
     float getOutputValueFloat() {return  mOutputValueFloat;}
     unsigned short getOutputValue() {return mOutputValue;}
     

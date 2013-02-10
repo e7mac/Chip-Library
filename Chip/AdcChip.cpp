@@ -10,7 +10,7 @@
 
 AdcChip::AdcChip()
 {
-    resetInput.setChip(this);
+    resetInputRegister.setChip(this);
     for(mForIndex=0; mForIndex<16; mForIndex++)
         output[mForIndex].setChip(this);
 }
@@ -20,16 +20,27 @@ void AdcChip::setInputValue(float withInputValue)
     mInputValueFloat = withInputValue;
 }
 
-void AdcChip::tick()
+void AdcChip::tickInput()
 {
-    resetInput.refreshInput();
-    if (resetInput.getRisingEdge())
-        reset();
+    resetInputRegister.refreshInput();
+    if (resetInputRegister.getRisingEdge())
+        resetInput();
 }
 
-void AdcChip::reset()
+void AdcChip::tickOutput()
+{
+    if (resetInputRegister.getRisingEdge())
+        resetOutput();
+}
+
+
+void AdcChip::resetInput()
 {
     mInputValue = 0.5*(mInputValueFloat+1)*(1<<nbits);
+}
+
+void AdcChip::resetOutput()
+{
     for(mForIndex=0; mForIndex<16; mForIndex++)
         output[mForIndex].setOutputBit(mInputValue&(1<<mForIndex));
 }

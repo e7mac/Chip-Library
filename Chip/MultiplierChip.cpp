@@ -10,29 +10,43 @@
 
 MultiplierChip::MultiplierChip()
 {
-    clockInput.setChip(this);
-    resetInput.setChip(this);
+    clockInputRegister.setChip(this);
+    resetInputRegister.setChip(this);
     for (forIndex=0;forIndex<2;forIndex++)
         input[forIndex].setChip(this);
     output.setChip(this);
 }
 
-void MultiplierChip::tick()
+void MultiplierChip::tickInput()
 {
-    clockInput.refreshInput();
-    if (clockInput.getRisingEdge())
-        clock();
-    resetInput.refreshInput();
-    if (resetInput.getRisingEdge())
-        reset();
+    clockInputRegister.refreshInput();
+    if (clockInputRegister.getRisingEdge())
+        clockInput();
+    resetInputRegister.refreshInput();
+    if (resetInputRegister.getRisingEdge())
+        resetInput();
 }
-void MultiplierChip::clock()
+
+void MultiplierChip::tickOutput()
+{
+    if (clockInputRegister.getRisingEdge())
+        clockOutput();
+    if (resetInputRegister.getRisingEdge())
+        resetOutput();
+}
+
+void MultiplierChip::clockInput()
 {
     for (forIndex=0;forIndex<2;forIndex++)
         input[forIndex].refreshInput();
+}
+
+void MultiplierChip::clockOutput()
+{
     output.outputRegister.leftCircularShift(1);
 }
-void MultiplierChip::reset()
+
+void MultiplierChip::resetInput()
 {
     for (forIndex=0;forIndex<2;forIndex++)
     {
@@ -44,5 +58,9 @@ void MultiplierChip::reset()
     mOutputValueFloat = (mOutputValueFloat + 1 ) * 0.5; // 0->1 (just below)
     mOutputValue = mOutputValueFloat * ((1<<nbits)) - 1;
     mOutputValueFloat = mOutputValueFloat*2 - 1;
+}
+
+void MultiplierChip::resetOutput()
+{
     output.outputRegister.setValue(mOutputValue);
 }

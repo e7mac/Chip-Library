@@ -22,12 +22,14 @@ protected:
 public:
     SerialInput input;
     SingleBitOutput output[16];
-    EdgeTriggeredInput clockInput;
+    EdgeTriggeredInput clockInputRegister;
     
     DelayChip();
     
-    void tick();
-    void clock();
+    void tickInput();
+    void tickOutput();
+    void clockInput();
+    void clockOutput();
     
     virtual std::string description() {return "delay";};
 };

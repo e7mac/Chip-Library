@@ -13,8 +13,8 @@ WavetableChip::WavetableChip()
 {
     input.setChip(this);
     output.setChip(this);
-    clockInput.setChip(this);
-    resetInput.setChip(this);
+    clockInputRegister.setChip(this);
+    resetInputRegister.setChip(this);
 
 }
 
@@ -28,25 +28,42 @@ void WavetableChip::cache()
         wavetable[i] = waveFunction(i);
 }
 
-
-void WavetableChip::tick()
+void WavetableChip::tickInput()
 {
-    clockInput.refreshInput();
-    if (clockInput.getRisingEdge())
-        clock();
-    resetInput.refreshInput();
-    if (resetInput.getRisingEdge())
-        reset();
+    clockInputRegister.refreshInput();
+    if (clockInputRegister.getRisingEdge())
+        clockInput();
+    resetInputRegister.refreshInput();
+    if (resetInputRegister.getRisingEdge())
+        resetInput();
 }
-void WavetableChip::clock()
+
+void WavetableChip::tickOutput()
+{
+    if (clockInputRegister.getRisingEdge())
+        clockOutput();
+    if (resetInputRegister.getRisingEdge())
+        resetOutput();
+}
+
+void WavetableChip::clockInput()
 {
     input.refreshInput();
+}
+
+void WavetableChip::clockOutput()
+{
     output.outputRegister.leftCircularShift(1);
 }
-void WavetableChip::reset()
+
+void WavetableChip::resetInput()
 {
     mIndex = input.inputRegister.getValue();
     mWavetableOutFloat = wavetable[mIndex];
     mWavetableOut = 0.5*(mWavetableOutFloat + 1) * ((1<<nbits) - 1);
+}
+
+void WavetableChip::resetOutput()
+{
     output.outputRegister.setValue(mWavetableOut);
 }

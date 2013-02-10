@@ -26,6 +26,7 @@ public:
 
     void refreshInput();
     bool getRisingEdge();
+    bool getState();
 };
 
 

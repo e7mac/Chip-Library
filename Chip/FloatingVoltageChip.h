@@ -21,7 +21,8 @@ protected:
 public:
     FloatingVoltageChip();
     
-    void tick();
+    void tickInput();
+    void tickOutput();
     virtual std::string description() {return "floating voltage";};
 
 };

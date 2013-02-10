@@ -32,8 +32,8 @@ public:
     FrequencyControlWordChip();
     SerialInput deviationInput;
     SerialOutput output;
-    EdgeTriggeredInput clockInput;
-    EdgeTriggeredInput resetInput;
+    EdgeTriggeredInput clockInputRegister;
+    EdgeTriggeredInput resetInputRegister;
     
     void setCenterFrequency(float withFrequency);
     void setDeviation(float withDeviation);
@@ -46,9 +46,12 @@ public:
     float* getBetaAddress(){return &mBeta;}
 
     
-    void tick();
-    void clock();
-    void reset();
+    void tickInput();
+    void tickOutput();
+    void clockInput();
+    void clockOutput();
+    void resetInput();
+    void resetOutput();
     
     virtual std::string description() {return "freq control word";};
 };

@@ -22,14 +22,16 @@ public:
     unsigned short forIndex; // pre-allocating
 public:
     DacChip();
-    EdgeTriggeredInput resetInput;
+    EdgeTriggeredInput resetInputRegister;
     SingleBitInput input[16];
     
     float getOutputValue(){return mOutputValue;};
     float getOutputValueFloat(){return mOutputValueFloat;};
 
-    void tick();
-    void reset();
+    void tickInput();
+    void tickOutput();
+    void resetInput();
+    void resetOutput();
     virtual std::string description() {return "dac";};
 
 };

@@ -24,3 +24,8 @@ bool EdgeTriggeredInput::getRisingEdge()
 {
     return risingEdge;
 }
+
+bool EdgeTriggeredInput::getState()
+{
+    return state;
+}

@@ -53,12 +53,15 @@ public:
     void sustain();
     void release();
     
-    void tick();
-    void clock();
-    void reset();
+    void tickInput();
+    void tickOutput();
+    void clockInput();
+    void clockOutput();
+    void resetInput();
+    void resetOutput();
     
-    EdgeTriggeredInput clockInput;
-    EdgeTriggeredInput resetInput;
+    EdgeTriggeredInput clockInputRegister;
+    EdgeTriggeredInput resetInputRegister;
     SingleBitInput noteOnInput;
     SerialOutput output;
     virtual std::string description() {return "adsr";};

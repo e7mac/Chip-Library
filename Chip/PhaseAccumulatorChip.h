@@ -26,13 +26,16 @@ public:
 public:
     SerialInput input;
     SerialOutput output;
-    EdgeTriggeredInput clockInput;
-    EdgeTriggeredInput resetInput;
+    EdgeTriggeredInput clockInputRegister;
+    EdgeTriggeredInput resetInputRegister;
 
     PhaseAccumulatorChip();
-    void tick();
-    void clock();
-    void reset();
+    void tickInput();
+    void tickOutput();
+    void clockInput();
+    void clockOutput();
+    void resetInput();
+    void resetOutput();
     unsigned short getPhaseIncrement() { return mPhaseIncrement;}
     float getPhaseIncrementFloat() { return mPhaseIncrementFloat;}
     unsigned short getPhase() { return mPhase;}    

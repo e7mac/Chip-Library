@@ -51,7 +51,11 @@ void CircuitBoard::tick()
 {
     for (int i=0;i<mChips.size();i++)
     {
-        mChips[i]->tick();
+        mChips[i]->tickInput();
+    }
+    for (int i=0;i<mChips.size();i++)
+    {
+        mChips[i]->tickOutput();
     }
 }
 

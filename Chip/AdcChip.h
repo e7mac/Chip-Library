@@ -22,12 +22,14 @@ public:
     unsigned short mForIndex; // pre-allocating
 public:
     AdcChip();
-    EdgeTriggeredInput resetInput;
+    EdgeTriggeredInput resetInputRegister;
     SingleBitOutput output[16];
     
     void setInputValue(float withInputValue);
-    void tick();
-    void reset();
+    void tickInput();
+    void tickOutput();
+    void resetInput();
+    void resetOutput();
     
     virtual std::string description() {return "adc";};
 };

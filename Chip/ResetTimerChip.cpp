@@ -15,17 +15,27 @@ ResetTimerChip::ResetTimerChip()
     mCount = 0;
 }
 
-void ResetTimerChip::tick()
+void ResetTimerChip::tickInput()
 {
     input.refreshInput();
     if (input.getRisingEdge())
-        clock();
+        clockInput();
 }
 
-void ResetTimerChip::clock()
+void ResetTimerChip::tickOutput()
+{
+    if (input.getRisingEdge())
+        clockOutput();
+}
+
+void ResetTimerChip::clockInput()
 {
     mCount++;
     mCount %= nbits;
     mState = !mCount;
+}
+
+void ResetTimerChip::clockOutput()
+{
     output.setOutputBit(mState);
 }

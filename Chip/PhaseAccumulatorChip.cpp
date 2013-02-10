@@ -14,27 +14,39 @@ PhaseAccumulatorChip::PhaseAccumulatorChip()
     mPhase=0;
     input.setChip(this);
     output.setChip(this);
-    clockInput.setChip(this);
-    resetInput.setChip(this);
+    clockInputRegister.setChip(this);
+    resetInputRegister.setChip(this);
 }
 
-void PhaseAccumulatorChip::tick()
+void PhaseAccumulatorChip::tickInput()
 {
-    clockInput.refreshInput();
-    if (clockInput.getRisingEdge())
-        clock();
-    resetInput.refreshInput();
-    if (resetInput.getRisingEdge())
-        reset();
+    clockInputRegister.refreshInput();
+    if (clockInputRegister.getRisingEdge())
+        clockInput();
+    resetInputRegister.refreshInput();
+    if (resetInputRegister.getRisingEdge())
+        resetInput();
 }
-void PhaseAccumulatorChip::clock()
+
+void PhaseAccumulatorChip::tickOutput()
+{
+    if (clockInputRegister.getRisingEdge())
+        clockOutput();
+    if (resetInputRegister.getRisingEdge())
+        resetOutput();
+}
+
+void PhaseAccumulatorChip::clockInput()
 {
     input.refreshInput();
+}
+
+void PhaseAccumulatorChip::clockOutput()
+{
     output.outputRegister.leftCircularShift(1);
 }
 
-
-void PhaseAccumulatorChip::reset()
+void PhaseAccumulatorChip::resetInput()
 {
     mPhaseIncrementFloat = input.inputRegister.getValue();
     // TODO: efficiency
@@ -42,5 +54,9 @@ void PhaseAccumulatorChip::reset()
     mPhaseIncrementFloat *= (float)((1<<16)-1)/srate;
     mPhaseIncrement = mPhaseIncrementFloat;
     mPhase = (mPhase + mPhaseIncrement)&((1<<16)-1);
+}
+
+void PhaseAccumulatorChip::resetOutput()
+{
     output.outputRegister.setValue(mPhase>>(16-nbits));
 }

@@ -13,7 +13,11 @@ FloatingVoltageChip::FloatingVoltageChip()
     output.setChip(this);
 }
 
-void FloatingVoltageChip::tick()
+void FloatingVoltageChip::tickInput()
+{
+}
+
+void FloatingVoltageChip::tickOutput()
 {
     output.setOutputBit(rand()%2); // TO DO: is there a better way to do this? rand() inefficient? This only gets a new number every tick, not every time it is accessed - is that okay? Maybe extend the singleBitOutput subclass, like RandomBitOutput...
 }

@@ -24,8 +24,10 @@ public:
     SingleBitOutput output;
     EdgeTriggeredInput input;
     
-    void tick();
-    void clock();
+    void tickInput();
+    void tickOutput();
+    void clockInput();
+    void clockOutput();
     
     virtual std::string description() {return "reset timer";};
 };

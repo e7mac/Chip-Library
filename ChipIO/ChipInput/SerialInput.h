@@ -17,7 +17,6 @@
 class SerialInput: public ChipInput
 {
 protected:
-    
 public:
     Register inputRegister;
     void refreshInput();

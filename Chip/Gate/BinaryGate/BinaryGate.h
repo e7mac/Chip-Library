@@ -20,7 +20,8 @@ protected:
 public:
     BinaryGate();
     SingleBitInput input[2];
-    void tick();
+    void tickInput();
+    void tickOutput();
     virtual bool logicalOperation(bool logicIn0, bool logicIn1) {return 0;};
 };
 

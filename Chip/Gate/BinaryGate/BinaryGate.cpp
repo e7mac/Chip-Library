@@ -15,9 +15,13 @@ BinaryGate::BinaryGate()
     output.setChip(this);
 }
 
-void BinaryGate::tick()
+void BinaryGate::tickInput()
 {
     input[0].refreshInput();
     input[1].refreshInput();
+}
+
+void BinaryGate::tickOutput()
+{
     output.setOutputBit(logicalOperation(input[0].getInputBit(), input[1].getInputBit()));
 }

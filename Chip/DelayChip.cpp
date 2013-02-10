@@ -11,21 +11,31 @@
 DelayChip::DelayChip()
 {
     input.setChip(this);
-    clockInput.setChip(this);
+    clockInputRegister.setChip(this);
     for (forIndex=0;forIndex<nbits;forIndex++)
         output[forIndex].setChip(this);
 }
 
-void DelayChip::tick()
+void DelayChip::tickInput()
 {
-    clockInput.refreshInput();
-    if (clockInput.getRisingEdge())
-        clock();
+    clockInputRegister.refreshInput();
+    if (clockInputRegister.getRisingEdge())
+        clockInput();
 }
 
-void DelayChip::clock()
+void DelayChip::tickOutput()
+{
+    if (clockInputRegister.getRisingEdge())
+        clockOutput();
+}
+
+void DelayChip::clockInput()
 {
     input.refreshInput();
+}
+
+void DelayChip::clockOutput()
+{
     for (forIndex=0;forIndex<nbits;forIndex++)
         output[forIndex].setOutputBit(input.inputRegister.getBitAtPosition(forIndex));
 }

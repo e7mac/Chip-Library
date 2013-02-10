@@ -13,8 +13,12 @@ TimerChip::TimerChip()
     output.setChip(this);
 }
 
-void TimerChip::tick()
+void TimerChip::tickInput()
 {
     mState = !mState;
+}
+
+void TimerChip::tickOutput()
+{
     output.setOutputBit(mState);
 }

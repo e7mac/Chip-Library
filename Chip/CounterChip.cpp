@@ -15,16 +15,28 @@ CounterChip::CounterChip()
         output[forIndex].setChip(this);
 }
 
-void CounterChip::tick()
+void CounterChip::tickInput()
 {
     input.refreshInput();
+    inputBit = input.getState();
     if (input.getRisingEdge())
-        clock();
+        clockInput();
 }
 
-void CounterChip::clock()
+void CounterChip::tickOutput()
+{
+    output[0].setOutputBit(inputBit); // pass through
+    if (input.getRisingEdge())
+        clockOutput();
+}
+
+void CounterChip::clockInput()
 {
     mCount++;
-    for (forIndex=0;forIndex<16;forIndex++)
-        output[forIndex].setOutputBit(mCount & (1<<forIndex) );
+}
+
+void CounterChip::clockOutput()
+{
+    for (forIndex=1;forIndex<16;forIndex++)
+        output[forIndex].setOutputBit(mCount & (1<<(forIndex-1)) );
 }

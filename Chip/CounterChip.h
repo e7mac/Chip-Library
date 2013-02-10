@@ -19,12 +19,15 @@ class CounterChip: public Chip
 protected:
     short mCount;
     short forIndex; //pre-alloc for speed
+    bool inputBit;
 public:
     CounterChip();
-    void tick();
+    void tickInput();
+    void tickOutput();
     EdgeTriggeredInput input;
     SingleBitOutput output[16];
-    void clock();
+    void clockInput();
+    void clockOutput();
     
     virtual std::string description() {return "counter";};
 
